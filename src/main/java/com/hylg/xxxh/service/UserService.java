@@ -14,7 +14,39 @@ public class UserService {
 	@Autowired
 	private UserDao userDao;
 
+	/**
+	 * 查询用户表信息
+	 * @param ob
+	 * @return
+	 */
 	public List<User> findUser(Object ob){
 		return userDao.findUser(ob); 
+	}
+	
+	/**
+	 * 添加用户信息
+	 * @param ob
+	 * @return
+	 */
+	public int addUser(Object ob){
+		return userDao.addUser(ob);
+	}
+	
+	/**
+	 * 修改用户信息
+	 * @param ob
+	 * @return
+	 */
+	public int setUser(Object ob){
+		return userDao.setUser(ob);
+	}
+	
+	/**
+	 * 使用户失效
+	 * @param ob
+	 * @return
+	 */
+	public int delUser(Object ob){
+		return userDao.setUser(ob);
 	}
 }

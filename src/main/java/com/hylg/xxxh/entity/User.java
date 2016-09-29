@@ -12,19 +12,21 @@ public class User {
 
 	private String userName;// 名称
 
-	private String userSex;// 性别
+	private String userSex;// 性别 1/0
 
 	private String userPhone;// 手机号码
 
 	private String userEmail;// 电子邮箱
 
-	private String userState;// 状态
+	private String userState;// 状态 1/0
 
 	private String userVip;// VIP等级
 
 	private String userImage;// 头像存储地址
 
 	private String userCtime;// 注册时间
+
+	private Object data;// 其他关联数据
 
 	public final String getUserId() {
 		return userId;
@@ -96,6 +98,14 @@ public class User {
 
 	public final void setUserCtime(String userCtime) {
 		this.userCtime = userCtime;
+	}
+
+	public final Object getData() {
+		return data;
+	}
+
+	public final void setData(Object data) {
+		this.data = data;
 	}
 
 }

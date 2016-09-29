@@ -17,13 +17,14 @@ public class IndexController {
 	public String index() {
 		return "index";
 	}
-	
+
 	@RequestMapping("{page}")
-	public String page(@PathVariable("page") String page){
+	public String page(@PathVariable("page") String page) {
 		return page;
 	}
+
 	@RequestMapping("admin/{page}")
-	public String adminPage(@PathVariable("page") String page){
-		return "admin/"+page;
+	public String adminPage(@PathVariable("page") String page) {
+		return "admin/" + page;
 	}
 }

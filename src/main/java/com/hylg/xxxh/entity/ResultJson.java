@@ -8,11 +8,11 @@ package com.hylg.xxxh.entity;
  */
 public class ResultJson {
 
-	private int code; // 标识
+	private int code;// 标识
 
-	private String msg; // 提示信息
+	private String msg;// 提示信息
 
-	private Object data; // 数据源
+	private Object data;// 数据源
 
 	public final int getCode() {
 		return code;
