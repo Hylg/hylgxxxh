@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hylg.xxxh.dao.UserDao">
+	<!-- 用户功能SQL语句 -->
+	<resultMap type="com.hylg.xxxh.entity.User" id="users">
+		<id column="user_id" property="userId" jdbcType="VARCHAR"/>
+		<result column="user_name" property="userName" jdbcType="VARCHAR"/>
+		<result column="user_sex" property="userSex" jdbcType="VARCHAR"/>
+		<result column="user_phone" property="userPhone" jdbcType="VARCHAR"/>
+		<result column="user_email" property="userEmail" jdbcType="VARCHAR"/>
+		<result column="user_state" property="userState" jdbcType="VARCHAR"/>
+		<result column="user_vip" property="userVip" jdbcType="VARCHAR"/>
+		<result column="user_image" property="userImage" jdbcType="VARCHAR"/>
+		<result column="user_ctime" property="userCtime" jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<select id="findUser" resultMap="users">
+		select * from user_info
+		<where>
+			<if test="uId != null">and user_id = #{uId}</if>
+			<if test="uName != null">and user_name = #{uName}</if>
+			<if test="uSex != null">and user_sex = #{uSex}</if>
+			<if test="uPhone != null">and user_phone = #{uPhone}</if>
+			<if test="uEmail != null">and user_email = #{uEmail}</if>
+			<if test="uState != null">and user_state = #{uState}</if>
+			<if test="uVip != null">and user_vip = #{uVip}</if>
+			<if test="uImage != null">and user_image = #{uImage}</if>
+			<if test="uCtime != null">and user_ctime = #{uCtime}</if>
+		</where>
+	</select>
+	
+	<insert id="addUser">
+		insert into user_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">user_id,</if>
+			<if test="userName != null">user_name,</if>
+			<if test="userSex != null">user_sex,</if>
+			<if test="userPhone != null">user_phone,</if>
+			<if test="userEmail != null">user_email,</if>
+			<if test="userState != null">user_state,</if>
+			<if test="userVip != null">user_vip,</if>
+			<if test="userImage != null">user_image,</if>
+			<if test="userCtime != null">user_ctime,</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">#{userId},</if>
+			<if test="userName != null">#{userName},</if>
+			<if test="userSex != null">#{userSex},</if>
+			<if test="userPhone != null">#{userPhone},</if>
+			<if test="userEmail != null">#{userEmail},</if>
+			<if test="userState != null">#{userState},</if>
+			<if test="userVip != null">#{userVip},</if>
+			<if test="userImage != null">#{userImage},</if>
+			<if test="userCtime != null">#{userCtime},</if>
+		</trim>
+	</insert>
+	
+	<update id="setUser">
+		update user_info set
+		<trim suffixOverrides="and">
+			<if test="userId != null">user_id = #{userId} and</if>
+			<if test="userName != null">user_name = #{userName} and</if>
+			<if test="userSex != null">user_sex = #{userSex} and</if>
+			<if test="userPhone != null">user_phone = #{userPhone} and</if>
+			<if test="userEmail != null">user_email = #{userEmail} and</if>
+			<if test="userState != null">user_state = #{userState} and</if>
+			<if test="userVip != null">user_vip = #{userVip} and</if>
+			<if test="userImage != null">user_image = #{userImage} and</if>
+			<if test="userCtime != null">user_ctime = #{userCtime} and</if>
+		</trim>
+		<where>
+			<if test="uId != null">and user_id = #{uId}</if>
+			<if test="uName != null">and user_name = #{uName}</if>
+			<if test="uSex != null">and user_sex = #{uSex}</if>
+			<if test="uPhone != null">and user_phone = #{uPhone}</if>
+			<if test="uEmail != null">and user_email = #{uEmail}</if>
+			<if test="uState != null">and user_state = #{uState}</if>
+			<if test="uVip != null">and user_vip = #{uVip}</if>
+			<if test="uImage != null">and user_image = #{uImage}</if>
+			<if test="uCtime != null">and user_ctime = #{uCtime}</if>
+		</where>
+	</update>
+</mapper>
