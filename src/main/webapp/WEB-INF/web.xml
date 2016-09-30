@@ -4,6 +4,30 @@
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	version="3.1" metadata-complete="true">
 	<!-- 如果是用mvn命令生成的xml，需要修改servlet版本为3.1 -->
+	
+	<!-- Spring配置文件开始 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+            classpath*:spring-*.xml
+        </param-value>
+	</context-param>
+	<!-- Spring配置文件结束 -->
+	
+	<!-- Spring监听器开始 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<!-- 防止Spring内存溢出监听器 -->
+	<listener>
+		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+	</listener>
+	<!-- 可以使用RequestContextHolder.currentRequestAttributes() 获取到请求的attr -->
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+	<!-- Spring监听器结束 -->
+	
 	<!-- 配置DispatcherServlet -->
 	<servlet>
 		<servlet-name>mvc-dispatcher</servlet-name>
@@ -22,9 +46,13 @@
 	</servlet-mapping>
 
 	<!-- Shiro安全过滤 -->
+	<!-- <listener>
+		<listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
+	</listener> -->
 	<filter>
 		<filter-name>shiroFilter</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<async-supported>true</async-supported>
 		<init-param>
 			<param-name>targetFilterLifecycle</param-name>
 			<param-value>true</param-value>
@@ -33,6 +61,46 @@
 	<filter-mapping>
 		<filter-name>shiroFilter</filter-name>
 		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 
+	 <filter>
+		<filter-name>HiddenHttpMethodFilter</filter-name>
+		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>HiddenHttpMethodFilter</filter-name>
+		<servlet-name>spring</servlet-name>
+	</filter-mapping>
+	
+	<!-- 编码过滤器开始 -->
+	<!--使用Spring的编码转换过滤器，将请求信息的编码统一转换为UTF-8，以避免中文乱码问题 -->
+	  <filter>
+		<filter-name>Set Character Encoding</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<async-supported>true</async-supported>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter> 
+
+	 <filter-mapping>
+		<filter-name>Set Character Encoding</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping> 
+	<!-- 编码过滤器结束 -->
+	
+	<!-- 配置SESSION超时，单位是分钟 -->
+	<session-config>
+		<session-timeout>30</session-timeout>
+		<cookie-config>
+			<!-- 不使用 cookie -->
+			<http-only>true</http-only>
+		</cookie-config>
+	</session-config>
 </web-app>

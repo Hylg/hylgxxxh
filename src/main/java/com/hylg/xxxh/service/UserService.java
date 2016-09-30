@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hylg.xxxh.dao.UserDao;
+import com.hylg.xxxh.entity.Access;
 import com.hylg.xxxh.entity.User;
 
 @Service
@@ -21,6 +22,14 @@ public class UserService {
 	 */
 	public List<User> findUser(Object ob){
 		return userDao.findUser(ob); 
+	}
+	/**
+	 * 查询账户表信息
+	 * @param ob
+	 * @return
+	 */
+	public List<Access> findAccess(Object ob){
+		return userDao.findAccess(ob); 
 	}
 	
 	/**

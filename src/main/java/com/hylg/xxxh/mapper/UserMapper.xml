@@ -13,11 +13,20 @@
 		<result column="user_image" property="userImage" jdbcType="VARCHAR"/>
 		<result column="user_ctime" property="userCtime" jdbcType="VARCHAR"/>
 	</resultMap>
+	
+	<resultMap type="com.hylg.xxxh.entity.Access" id="access">
+		<id column="access_id" property="accessId" jdbcType="VARCHAR"/>
+		<result column="access_token" property="accessToken" jdbcType="VARCHAR"/>
+		<result column="access_key" property="accessKey" jdbcType="VARCHAR"/>
+		<result column="user_id" property="userId" jdbcType="VARCHAR"/>
+		<result column="access_type_id" property="accessTypeId" jdbcType="VARCHAR"/>
+		<result column="access_ctime" property="accessCtime" jdbcType="VARCHAR"/>
+	</resultMap>
 
 	<select id="findUser" resultMap="users">
 		select * from user_info
 		<where>
-			<if test="uId != null">and user_id = #{uId}</if>
+			<if test="uId != null">user_id = #{uId}</if>
 			<if test="uName != null">and user_name = #{uName}</if>
 			<if test="uSex != null">and user_sex = #{uSex}</if>
 			<if test="uPhone != null">and user_phone = #{uPhone}</if>
@@ -26,6 +35,18 @@
 			<if test="uVip != null">and user_vip = #{uVip}</if>
 			<if test="uImage != null">and user_image = #{uImage}</if>
 			<if test="uCtime != null">and user_ctime = #{uCtime}</if>
+		</where>
+	</select>
+	
+	<select id="findAccess" resultMap="access">
+		select * from user_access
+		<where>
+			<if test="aId != null">access_id = #{aId}</if>
+			<if test="aToken != null">and access_token = #{aToken}</if>
+			<if test="aKey != null">and access_key = #{aKey}</if>
+			<if test="uId != null">and user_id = #{uId}</if>
+			<if test="atId != null">and access_type_id = #{atId}</if>
+			<if test="aCtime != null">and access_ctime = #{aCtime}</if>
 		</where>
 	</select>
 	
@@ -55,6 +76,26 @@
 		</trim>
 	</insert>
 	
+	<insert id="addAccess">
+		insert into user_access
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="accessId != null">access_id,</if>
+			<if test="accessToken != null">access_token,</if>
+			<if test="accessKey != null">access_key,</if>
+			<if test="userId != null">user_id,</if>
+			<if test="accessTypeId != null">access_type_id,</if>
+			<if test="accessCtime != null">access_ctime,</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="accessId != null">#{accessId},</if>
+			<if test="accessToken != null">#{accessToken},</if>
+			<if test="accessKey != null">#{accessKey},</if>
+			<if test="userId != null">#{userId},</if>
+			<if test="accessTypeId != null">#{accessTypeId},</if>
+			<if test="accessCtime != null">#{accessCtime},</if>
+		</trim>
+	</insert>
+	
 	<update id="setUser">
 		update user_info set
 		<trim suffixOverrides="and">
@@ -69,7 +110,7 @@
 			<if test="userCtime != null">user_ctime = #{userCtime} and</if>
 		</trim>
 		<where>
-			<if test="uId != null">and user_id = #{uId}</if>
+			<if test="uId != null">user_id = #{uId}</if>
 			<if test="uName != null">and user_name = #{uName}</if>
 			<if test="uSex != null">and user_sex = #{uSex}</if>
 			<if test="uPhone != null">and user_phone = #{uPhone}</if>
@@ -78,6 +119,26 @@
 			<if test="uVip != null">and user_vip = #{uVip}</if>
 			<if test="uImage != null">and user_image = #{uImage}</if>
 			<if test="uCtime != null">and user_ctime = #{uCtime}</if>
+		</where>
+	</update>
+	
+	<update id="setAccess">
+		update user_access set
+		<trim suffixOverrides="and">
+			<if test="accessId != null">access_id = #{accessId} and</if>
+			<if test="accessToken != null">access_token = #{accessToken} and</if>
+			<if test="accessKey != null">access_key = #{accessKey} and</if>
+			<if test="userId != null">user_id = #{userId} and</if>
+			<if test="accessTypeId != null">access_type_id = #{accessTypeId} and</if>
+			<if test="accessCtime != null">access_ctime = #{accessCtime} and</if>
+		</trim>
+		<where>
+			<if test="aId != null">access_id = #{aId}</if>
+			<if test="aToken != null">and access_token = #{aToken}</if>
+			<if test="aKey != null">and access_key = #{aKey}</if>
+			<if test="uId != null">and user_id = #{uId}</if>
+			<if test="atId != null">and access_type_id = #{atId}</if>
+			<if test="aCtime != null">and access_ctime = #{aCtime}</if>
 		</where>
 	</update>
 </mapper>

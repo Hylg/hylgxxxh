@@ -1,12 +1,14 @@
 package com.hylg.xxxh.utils;
 
 /**
- * 返回值标识标准
+ * 通信标识标准
  * 
  * @author Ruby
  * @datatime 2016年9月29日上午9:42:48
  */
 public class ResultCoreUtil {
+	
+	public static final String IMAGE_CODE = "catchaImg"; //验证码key
 
 	public static final int SUCCESS = 1; // 成功
 

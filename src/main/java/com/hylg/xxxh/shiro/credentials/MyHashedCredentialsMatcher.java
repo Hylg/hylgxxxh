@@ -1,12 +1,10 @@
 package com.hylg.xxxh.shiro.credentials;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
-import org.apache.shiro.cache.Cache;
-import org.apache.shiro.cache.CacheManager;
+
+import com.hylg.xxxh.utils.CoreUtil;
 
 /**
  * 自定义的密码验证及登陆次数限制
@@ -16,12 +14,8 @@ import org.apache.shiro.cache.CacheManager;
  */
 public class MyHashedCredentialsMatcher extends HashedCredentialsMatcher {
 
-	private Cache<String, AtomicInteger> passwordRetryCache;
-
-	public MyHashedCredentialsMatcher(CacheManager cacheManager) {
-		passwordRetryCache = cacheManager.getCache("passwordRetryCache");
-	}
-
+//	private static final Logger LOG = LoggerFactory.getLogger(MyHashedCredentialsMatcher.class);
+	
 	/**
 	 * 登陆次数限制,自定义密码验证
 	 * 
@@ -32,30 +26,13 @@ public class MyHashedCredentialsMatcher extends HashedCredentialsMatcher {
 	 */
 	@Override
 	public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
-		// UsernamePasswordToken uToken = (UsernamePasswordToken) token;
-		// 根据当前登录用户名，判断请求次数
-//		String username = (String) token.getPrincipal();
-//		AtomicInteger retryCount = passwordRetryCache.get(username);
-//		if (retryCount == null) {
-//			retryCount = new AtomicInteger(0);
-//			passwordRetryCache.put(username, retryCount);
-//		}
-//		// 请求次数上限
-//		// if (retryCount.incrementAndGet() > 5) {
-//		// throw new ExcessiveAttemptsException();
-//		// }
-//		// 判断用户名
-//		if (super.doCredentialsMatch(token, info)) {
-//			passwordRetryCache.remove(username);
-//		}
-//		// 判断登录密码
-//		Object tokenCredentials = null;
-//		tokenCredentials = new String((char[]) token.getCredentials());
-//		// if (!uToken.getHost().contains("autoLogin"))
-//		tokenCredentials = EncryptUtils.toMD5((String) tokenCredentials);
-//		Object accountCredentials = info.getCredentials();
-//		return equals(tokenCredentials, accountCredentials);
-		return true;
+		// 判断用户名
+		if (!super.doCredentialsMatch(token, info))
+			return false;
+		// 判断登录密码
+		Object tokenCredentials = CoreUtil.toMD5((String) token.getCredentials());
+		Object accountCredentials = info.getCredentials();
+		return equals(tokenCredentials, accountCredentials);
 	}
 
 }
